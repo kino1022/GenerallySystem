@@ -54,7 +54,7 @@ namespace GenerallySys.MoveControlSys.InertialSys {
             try {
                 Debug.Log("慣性運動量の減衰処理を開始します");
                 while (!token.IsCancellationRequested || movement < destractionValue) {
-                    await UniTask.Delay(TimeSpan.FromSeconds(destractionValue));
+                    await UniTask.Delay(TimeSpan.FromSeconds(interval));
                     Movement *= dumpingValue;
                     if (Movement < destractionValue) {
                         Debug.Log("慣性運動量の値が閾値を下回ったため、減衰ループを終了します");
@@ -64,12 +64,13 @@ namespace GenerallySys.MoveControlSys.InertialSys {
                         Debug.Log("キャンセルがスローされた為、減衰ループを終了します。");
                     }
                 }
+                Debug.Log("慣性の減衰ループを終了しました。");
             }
             catch (OperationCanceledException) {
 
             }
             finally {
-
+                inertial.enable = false;
             }
         }
     }

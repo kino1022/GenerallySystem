@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace GenerallySys.MoveControlSys.InertialSys {
@@ -40,8 +41,19 @@ namespace GenerallySys.MoveControlSys.InertialSys {
             }
         }
 
-        public A_Inertial (Vector3 setDirection,float setMovement,float setDumping,float setDestractionValue) {
+        /// <summary>
+        /// 慣性量管理クラスをインスタンスする領域
+        /// </summary>
+        private InertialMovement _inertialMovement;
 
+        /// <summary>
+        /// 慣性が有効かどうか
+        /// </summary>
+        public Boolean enable = true;
+
+        public A_Inertial (Vector3 setDirection,float setMovement,float setDumping) {
+            direction = setDirection;
+            _inertialMovement = new InertialMovement(this, setMovement, setDumping);
         }
     }
 }
