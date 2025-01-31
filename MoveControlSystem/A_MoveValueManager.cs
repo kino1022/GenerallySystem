@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class A_MoveValueManager : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+namespace GenerallySys.MoveControlSys {
+    /// <summary>
+    /// 移動方向ベクトルと移動量の大きさをかけ合わせた移動量の管理を行うクラスの基底クラス
+    /// </summary>
+    public abstract class A_MoveValueManager : MonoBehaviour {
+        public Vector3 TotalMoveValue;
     }
 }
