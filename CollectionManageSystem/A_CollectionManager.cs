@@ -12,6 +12,14 @@ namespace GenerallySys.CollectionManageSys {
 		/// </summary>
 		private List<A_Collection> _collections = new List<A_Collection>();
 
+		private float _totalValue = 0;
+		/// <summary>
+		/// ï‚ê≥ílÇÃëçó 
+		/// </summary>
+		public float totalValue {
+			get { return _totalValue; }
+			set { _totalValue = value; }
+		}
 
 		private void Start() {
 
