@@ -18,14 +18,25 @@ namespace GenerallySys.MoveControlSys {
         /// トータルの移動量
         /// </summary>
         [SerializeField]
-        public float totalMovement = 0.0f;
+        public Vector3 totalMovement = Vector3.zero;
 
         void Start() {
             _allManager = GenerallyUtility.GetComponentsOfType<A_MoveValueManager>(this.gameObject);
         }
 
         void Update() {
-            
+            totalMovement = GetTotalMoveValue();
+        }
+        /// <summary>
+        /// _allManagerに格納されている全てのTotalMoveValueを合計した値を返却するメソッド
+        /// </summary>
+        /// <returns></returns>
+        private Vector3 GetTotalMoveValue () {
+            var totalValue = Vector3.zero;
+            foreach (var value in _allManager) {
+                totalValue += value.TotalMoveValue;
+            }
+            return totalValue;
         }
     }
 }

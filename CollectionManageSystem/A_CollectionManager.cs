@@ -26,7 +26,8 @@ namespace GenerallySys.CollectionManageSys {
 		}
 
 		private void Update() {
-
+			totalValue = 1.0f + CalucrationTotalValue();
+			CheckEnableCollection();
 		}
 
 		/// <summary>
