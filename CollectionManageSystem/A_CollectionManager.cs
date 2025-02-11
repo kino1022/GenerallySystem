@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Comparers;
 using UnityEngine.Events;
 
 namespace GenerallySys.CollectionManageSys {
@@ -21,7 +22,7 @@ namespace GenerallySys.CollectionManageSys {
 			get { return _totalRatio; }
 			set { 
 				_totalRatio = value;
-				wasChanged.Invoke();
+				wasChanged?.Invoke(_totalRatio, _totalFixed);
 			}
 		}
 
@@ -33,11 +34,14 @@ namespace GenerallySys.CollectionManageSys {
 			get { return _totalFixed; }
 			set { 
 				_totalFixed = value;
-				wasChanged.Invoke();
+				wasChanged?.Invoke(_totalRatio,_totalFixed);
 			}
 		}
 
-		public UnityEvent wasChanged;
+		/// <summary>
+		/// 補正値の変化が発生した際に発火されるイベント、引数は順に（_totalRatio,_totalFixed）
+		/// </summary>
+		public event Action<float,float> wasChanged;
 
 		private void Start() {
 

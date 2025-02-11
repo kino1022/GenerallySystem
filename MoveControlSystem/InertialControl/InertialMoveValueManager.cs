@@ -16,6 +16,7 @@ namespace GenerallySys.MoveControlSys.InertialSys {
         private InertialMoveCollectionManager _collectionManager;
 
         private void Start () {
+
             //慣性管理マネージャーの取得処理「
             _inetialManager = GetComponent<InertialManager>();
             if (_inetialManager == null){
@@ -24,6 +25,7 @@ namespace GenerallySys.MoveControlSys.InertialSys {
             else{
                 Debug.Log("慣性管理マネージャーの取得に成功しました。");
             }
+
             //慣性補正値管理マネージャーの取得処理
             _collectionManager = GetComponent<InertialMoveCollectionManager>();
             if (_collectionManager == null) {
@@ -35,19 +37,7 @@ namespace GenerallySys.MoveControlSys.InertialSys {
         }
 
         private void Update() {
-            TotalMoveValue = CalculationTotalValue() * _collectionManager.totalValue;
-        }
-        
-        /// <summary>
-        ///　現在働いている慣性の総量を算出して返すメソッド
-        /// </summary>
-        /// <returns></returns>
-        private Vector3 CalculationTotalValue () {
-            var totalValue = Vector3.zero;
-            foreach (A_Inertial inertial in _inetialManager.inertials){
-                totalValue += inertial.totalMoveValue;
-            }
-            return totalValue;
+
         }
     }
 }

@@ -8,7 +8,7 @@ namespace GenerallySys.MoveControlSys {
     /// <summary>
     /// アタッチされているすべてのA_MoveValueManagerを取得して、その総移動量を算出するコンポーネント
     /// </summary>
-    public class FinnalyMovementManager : MonoBehaviour {
+    public class FinalyMovementManager : MonoBehaviour {
         /// <summary>
         /// アタッチされているすべてのA_MoveValueManager
         /// </summary>
