@@ -35,7 +35,7 @@ namespace GenerallySys.MoveControlSys.InertialSys {
         }
 
         private void Update() {
-            TotalMoveValue = CalculationTotalValue() * (1.0f + _collectionManager.totalValue);
+            TotalMoveValue = CalculationTotalValue() * _collectionManager.totalValue;
         }
         
         /// <summary>

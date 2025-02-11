@@ -1,18 +1,22 @@
+using GenerallySys.Definition;
 using GenerallySys.MoveControlSys.GravitiySys;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using static GenerallySys.Definition.CollectionValueType;
 
 namespace GenerallySys.CollectionManageSys {
-	/// <summary>
-	/// 補正値の基底クラス
-	/// </summary>
 	public abstract class A_Collection {
+		/// <summary>
+		/// 補正値の値の分類
+		/// </summary>
+		public CollectionValueType type;
 
 		private float _collection = 0.0f;
 		/// <summary>
-		/// 補正値の量(%ではなく小数で定義する事)
+		/// 補正値の値
 		/// </summary>
 		public float collection {
 			get { return _collection; }
@@ -20,8 +24,8 @@ namespace GenerallySys.CollectionManageSys {
 		}
 
 		/// <summary>
-		/// 補正値が有効かどうかの真偽値
+		/// 補正値が消滅した際に呼び出されるイベント
 		/// </summary>
-		public Boolean enable = true;
+		public UnityEvent wasReleased;
 	}
 }

@@ -60,13 +60,7 @@ namespace GenerallySys.MoveControlSys.GravitiySys {
 		}
 
 		void Update () {
-			//この方法だとCharacterController.isGroundedの仕様上上手く重力を無効化出来ないみたい。
-			if (_controller.isGrounded && enableGravity) {
-				TotalMoveValue = direction * ( _gravityValue * _gravityCollection.totalValue );
-			}
-			else {
-				TotalMoveValue = Vector3.zero;
-			}
+
 		}
 	}
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace GenerallySys.CollectionManageSys {
 	/// <summary>
@@ -12,44 +13,46 @@ namespace GenerallySys.CollectionManageSys {
 		/// </summary>
 		private List<A_Collection> _collections = new List<A_Collection>();
 
-		private float _totalValue = 0;
+		private float _totalRatio = 0.0f;
 		/// <summary>
-		/// 補正値の総量
+		/// 割合型補正値の合計の値
 		/// </summary>
-		public float totalValue {
-			get { return _totalValue; }
-			set { _totalValue = value; }
+		public float totalRatoio {
+			get { return _totalRatio; }
+			set { 
+				_totalRatio = value;
+				wasChanged.Invoke();
+			}
 		}
+
+		private float _totalFixed = 0.0f;
+		/// <summary>
+		/// 固定値型補正値の合計値
+		/// </summary>
+		public float totalFixed {
+			get { return _totalFixed; }
+			set { 
+				_totalFixed = value;
+				wasChanged.Invoke();
+			}
+		}
+
+		public UnityEvent wasChanged;
 
 		private void Start() {
 
 		}
 
 		private void Update() {
-			totalValue = 1.0f + CalucrationTotalValue();
-			CheckEnableCollection();
+
 		}
 
-		/// <summary>
-		/// 補正値リスト内から有効でない補正値を探して除外するメソッド
-		/// </summary>
-		private void CheckEnableCollection () {
-			for (int i = 0; i < _collections.Count; i++) {
-				if (!_collections[i].enable) {
-					_collections.RemoveAt(i);
-				}
-			}
-		}
 		/// <summary>
 		/// 補正値リストを参照して補正値の合計値を返すメソッド
 		/// </summary>
 		/// <returns></returns>
-		private float CalucrationTotalValue () {
-			float totalValue = 0.0f;
-			foreach (A_Collection collection in _collections) {
-				totalValue += collection.collection;
-			}
-			return totalValue;
+		private void CalucrationTotalValue () {
+
 		}
 
 		/// <summary>
