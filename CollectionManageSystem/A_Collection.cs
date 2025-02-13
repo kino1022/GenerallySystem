@@ -3,6 +3,7 @@ using GenerallySys.MoveControlSys.GravitiySys;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using static GenerallySys.Definition.CollectionValueType;
@@ -24,8 +25,8 @@ namespace GenerallySys.CollectionManageSys {
 		}
 
 		/// <summary>
-		/// 補正値が消滅した際に呼び出されるイベント
+		/// 補正値が無効化された際に発火されるイベント
 		/// </summary>
-		public UnityEvent wasReleased;
+		public event Action<A_Collection> wasReleased;
 	}
 }

@@ -1,3 +1,6 @@
+using GenerallySys.CollectionManageSys.Test;
+using GenerallySys.Definition;
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,18 +55,52 @@ namespace GenerallySys.CollectionManageSys {
 		}
 
 		/// <summary>
-		/// 補正値リストを参照して補正値の合計値を返すメソッド
+		/// 補正値の生成を行うメソッド（ジェネリックを用いた試験的なものである為依存は禁物）
 		/// </summary>
-		/// <returns></returns>
-		private void CalucrationTotalValue () {
-
+		/// <typeparam name="T"></typeparam>
+		/// <param name="constructor"></param>
+		public void CreateCollection<T> (Func<T> constructor) where T : A_Collection {
+			T newCollection = constructor();
+			_collections.Add(newCollection);
+			newCollection.wasReleased += GetWasReleased;
 		}
 
 		/// <summary>
-		/// 補正値のリセットを行うメソッド
+		/// 補正値の消滅イベントが発火された際に呼び出されるメソッド
 		/// </summary>
-		public void ResetCollections () {
-			_collections.Clear();
+		/// <param name="release"></param>
+		private void GetWasReleased (A_Collection release) {
+			foreach (var collection in _collections) {
+				if (collection == release) {
+					_collections.Remove(release);
+					break;
+				}
+			}
+			Debug.Log("補正値クラスの除外処理が終了しました");
+		}
+
+		/// <summary>
+		/// 補正値総量の算出メソッド（代入型の概念を用いた試験的なものなので依存しない事）
+		/// </summary>
+		/// <param name="ratio"></param>
+		/// <param name="fix"></param>
+		/// <param name="index"></param>
+		private void ClucrationTotalValue (ref float ratio,ref float fix,List<A_Collection> index) {
+
+			var rat = 0.0f;
+			var fixe = 0.0f;
+
+			foreach (var collection in index) {
+				if (collection.type == CollectionValueType.Ratio) {
+					rat += collection.collection;
+				}
+				else {
+					fixe += collection.collection;
+				}
+			}
+
+			if (ratio != rat) ratio = rat;
+			if (fix != fixe) fix = fixe;
 		}
 	}
 }

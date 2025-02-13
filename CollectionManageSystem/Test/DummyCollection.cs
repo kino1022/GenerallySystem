@@ -14,6 +14,6 @@ namespace GenerallySys.CollectionManageSys.Test {
 			collection = value;
 		}
 
-
+		
 	}
 }
