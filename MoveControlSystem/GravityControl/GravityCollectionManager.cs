@@ -8,6 +8,6 @@ namespace GenerallySys.MoveControlSys.GravitiySys {
 	/// 重力の働く量に対してかかる補正値を管理するコンポーネント
 	/// </summary>
 	public class GravityCollectionManager : A_CollectionManager {
-
+		
 	}
 }

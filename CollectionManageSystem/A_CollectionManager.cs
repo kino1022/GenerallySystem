@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static GenerallySys.Definition.CollectionValueType;
 using UnityEngine.Assertions.Comparers;
 using UnityEngine.Events;
 
@@ -21,7 +22,7 @@ namespace GenerallySys.CollectionManageSys {
 		/// <summary>
 		/// 割合型補正値の合計の値
 		/// </summary>
-		public float totalRatoio {
+		public float totalRatio {
 			get { return _totalRatio; }
 			set { 
 				_totalRatio = value;
@@ -56,6 +57,7 @@ namespace GenerallySys.CollectionManageSys {
 
 		/// <summary>
 		/// 補正値の生成を行うメソッド（ジェネリックを用いた試験的なものである為依存は禁物）
+		/// 記述例：_collection.CreateCollection(() => new DummyCollection(GenerallySys.Definition.CollectionValueType.Ratio, 10.0f));
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="constructor"></param>
@@ -73,6 +75,7 @@ namespace GenerallySys.CollectionManageSys {
 			foreach (var collection in _collections) {
 				if (collection == release) {
 					_collections.Remove(release);
+					release.wasReleased -= GetWasReleased;
 					break;
 				}
 			}
@@ -80,27 +83,13 @@ namespace GenerallySys.CollectionManageSys {
 		}
 
 		/// <summary>
-		/// 補正値総量の算出メソッド（代入型の概念を用いた試験的なものなので依存しない事）
+		/// 補正値の総量を算出するメソッド。渡し値は参照型なので、適切なものを入れる事
 		/// </summary>
 		/// <param name="ratio"></param>
 		/// <param name="fix"></param>
 		/// <param name="index"></param>
-		private void ClucrationTotalValue (ref float ratio,ref float fix,List<A_Collection> index) {
+		private void CalculationTotalValue() {
 
-			var rat = 0.0f;
-			var fixe = 0.0f;
-
-			foreach (var collection in index) {
-				if (collection.type == CollectionValueType.Ratio) {
-					rat += collection.collection;
-				}
-				else {
-					fixe += collection.collection;
-				}
-			}
-
-			if (ratio != rat) ratio = rat;
-			if (fix != fixe) fix = fixe;
 		}
 	}
 }

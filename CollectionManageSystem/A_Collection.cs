@@ -9,6 +9,9 @@ using UnityEngine.Events;
 using static GenerallySys.Definition.CollectionValueType;
 
 namespace GenerallySys.CollectionManageSys {
+	/// <summary>
+	/// 補正値の基底クラス。補正値の自己破壊とかコンストラクタとかは継承先で組むこと。
+	/// </summary>
 	public abstract class A_Collection {
 		/// <summary>
 		/// 補正値の値の分類
