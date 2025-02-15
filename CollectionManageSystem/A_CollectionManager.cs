@@ -47,13 +47,6 @@ namespace GenerallySys.CollectionManageSys {
 		/// </summary>
 		public event Action<float,float> wasChanged;
 
-		private void Start() {
-
-		}
-
-		private void Update() {
-
-		}
 
 		/// <summary>
 		/// 補正値の生成を行うメソッド（ジェネリックを用いた試験的なものである為依存は禁物）
@@ -65,6 +58,7 @@ namespace GenerallySys.CollectionManageSys {
 			T newCollection = constructor();
 			_collections.Add(newCollection);
 			newCollection.wasReleased += GetWasReleased;
+			CalculationTotalValue();
 		}
 
 		/// <summary>
@@ -79,17 +73,56 @@ namespace GenerallySys.CollectionManageSys {
 					break;
 				}
 			}
+			CalculationTotalValue();
 			Debug.Log("補正値クラスの除外処理が終了しました");
 		}
 
 		/// <summary>
-		/// 補正値の総量を算出するメソッド。渡し値は参照型なので、適切なものを入れる事
+		/// 補正値の合計値を更新するメソッド
 		/// </summary>
-		/// <param name="ratio"></param>
-		/// <param name="fix"></param>
-		/// <param name="index"></param>
 		private void CalculationTotalValue() {
 
+			float ratioValue = 0.0f;
+			float fixValue = 0.0f;
+
+			foreach (A_Collection collection in _collections) {
+				if (collection.type == Ratio) ratioValue += collection.collection;
+				else if (collection.type == Fixed) fixValue += collection.collection;
+			}
+
+			if (totalRatio != ratioValue) totalRatio = ratioValue;
+			if (totalFixed != fixValue) totalFixed = fixValue;
+		}
+
+		/// <summary>
+		/// 与えられた値に補正値の補正を施して返すメソッド
+		/// </summary>
+		/// <param name="baseValue"></param>
+		/// <returns></returns>
+		public float CalcurationCollectionedValue (float baseValue) {
+			return baseValue * totalRatio + totalFixed;
+		}
+
+		/// <summary>
+		/// 補正値のリセットを行うメソッド
+		/// </summary>
+		public void ClearCollection () {
+			foreach (A_Collection collection in _collections) {
+				_collections.Remove(collection);
+				collection.wasReleased -= GetWasReleased;
+			}
+		}
+
+		/// <summary>
+		///	引数で指定した補正値が存在したならtrueを返すメソッド
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public Boolean FetchTargetCollection (A_Collection target) {
+			foreach (A_Collection collection in _collections) {
+				if (collection == target) return true;
+			}
+			return false;
 		}
 	}
 }

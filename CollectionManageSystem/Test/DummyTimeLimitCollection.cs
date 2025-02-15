@@ -26,7 +26,5 @@ namespace GenerallySys.CollectionManageSys.Test {
 		public DummyTimeLimitCollection (CollectionValueType type,float value,float duration) {
 
 		}
-
-		private async void
 	}
 }
