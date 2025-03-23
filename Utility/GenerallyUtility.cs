@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace GenerallySys.Utility {
     /// <summary>
@@ -24,6 +28,39 @@ namespace GenerallySys.Utility {
             }
 
             return components;
+        }
+        /// <summary>
+        /// 特定のUnityEventの発火が時間内にあればtrueを返して、そうでなければfalseを返すタスク
+        /// </summary>
+        /// <param name="unityEvent"></param>
+        /// <param name="timeout"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        async public static UniTask<Boolean> WaitForUnityEvent (UnityEvent unityEvent,float timeout,CancellationToken token) {
+            try{
+                var tcs = new UniTaskCompletionSource();
+                unityEvent.AddListener(OnTrigger);
+
+                var completedTask = await UniTask.WhenAny(tcs.Task,UniTask.Delay(TimeSpan.FromSeconds(timeout),token.IsCancellationRequested));
+
+                if (completedTask == 0){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+
+                void OnTrigger () {
+                    tcs.TrySetResult();
+                    unityEvent.RemoveListener(OnTrigger);
+                }
+            }
+            catch (OperationCanceledException) {
+                return false;
+            }
+            finally{
+
+            }
         }
     }
 }
